@@ -14,12 +14,20 @@ function createGameboard (){
     const showBoard = () => {
         let string = '';
         position.forEach((row) => {
-            row.forEach(pos){
+            row.forEach((pos, idx) => {
                 if (pos === null){
-                    string+= '#'
+                    string+= '#';
+                    if ((row.length - 1) !== idx){
+                        string+= ' ';
+                    }
+                };
+                if ((row.length - 1) === idx){
+                    console.log('new row');
+                    string+= '\n';
                 }
-            }
-        })
+            });
+        });
+        return string;
     }
     return {newBoard, showBoard};
 
