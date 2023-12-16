@@ -1,4 +1,4 @@
-function createGameboard (){
+const game = (function createGameboard (){
     // checkPosition, setPosition
     // arrays for row and coloumn
     let position = [];
@@ -19,20 +19,16 @@ function createGameboard (){
                     string+= '#';
                     if ((row.length - 1) !== idx){
                         string+= ' ';
-                    }
+                    } else {
+                        string+= '\n';
+                    };
                 };
-                if ((row.length - 1) === idx){
-                    console.log('new row');
-                    string+= '\n';
-                }
             });
         });
         return string;
     }
-    return {newBoard, showBoard};
+    return { newBoard, showBoard, };
+})();
 
-}
-
-const game = createGameboard();
 game.newBoard();
 console.log(game.showBoard());
