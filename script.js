@@ -1,6 +1,5 @@
+import { createPlayer } from "./player.js";
 const game = (function createGameboard (){
-    // checkPosition, setPosition
-    // arrays for row and coloumn
     let position = [];
     const newBoard = () => {
         for (let x = 0; x < 3; x++){
@@ -27,8 +26,14 @@ const game = (function createGameboard (){
         });
         return string;
     }
-    return { newBoard, showBoard, };
+    const checkPosition = (a, b) => {
+        return position[a][b];
+    }
+    return { newBoard, showBoard, checkPosition, };
 })();
+const playerX = createPlayer('x');
+const playerO = createPlayer('o');
 
 game.newBoard();
 console.log(game.showBoard());
+console.log(game.checkPosition(1,2));
