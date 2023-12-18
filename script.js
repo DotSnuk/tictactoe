@@ -25,15 +25,20 @@ const game = (function createGameboard (){
             });
         });
         return string;
-    }
-    const checkPosition = (a, b) => {
+    };
+    const checkPosition = (a, b, player) => {
+        if (position[a][b] === null){
+            _setPosition(a, b, player);
+        }
         return position[a][b];
-    }
+    };
+    const _setPosition = (a, b, player) => {
+        position[a][b] = player.getMarker();
+    };
     return { newBoard, showBoard, checkPosition, };
 })();
-const playerX = createPlayer('x');
-const playerO = createPlayer('o');
-
 game.newBoard();
 console.log(game.showBoard());
-console.log(game.checkPosition(1,2));
+const playerX = createPlayer('x');
+const playerO = createPlayer('o');
+console.log(playerX.getMarker());
