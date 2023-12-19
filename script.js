@@ -16,11 +16,13 @@ const game = (function createGameboard (){
             row.forEach((pos, idx) => {
                 if (pos === null){
                     string+= '#';
-                    if ((row.length - 1) !== idx){
-                        string+= ' ';
-                    } else {
-                        string+= '\n';
-                    };
+                } else {
+                    string+= pos;
+                };
+                if ((row.length - 1) !== idx){
+                    string+= ' ';
+                } else {
+                    string+= '\n';
                 };
             });
         });
@@ -41,4 +43,7 @@ game.newBoard();
 console.log(game.showBoard());
 const playerX = createPlayer('x');
 const playerO = createPlayer('o');
-console.log(playerX.getMarker());
+game.checkPosition(0, 1, playerX);
+game.checkPosition(0, 1, playerO);
+game.checkPosition(1, 1, playerO);
+console.log(game.showBoard());
