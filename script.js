@@ -1,6 +1,8 @@
-import { createPlayer } from "./player.js";
+import { createPlayer } from "/player.js";
+import { gameController } from "./gameController.js";
 const game = (function createGameboard (){
     let position = [];
+
     const newBoard = () => {
         for (let x = 0; x < 3; x++){
             let row = [];
@@ -10,6 +12,7 @@ const game = (function createGameboard (){
             position.push(row);
         };
     };
+
     const showBoard = () => {
         let string = '';
         position.forEach((row) => {
@@ -28,12 +31,14 @@ const game = (function createGameboard (){
         });
         return string;
     };
+
     const checkPosition = (a, b, player) => {
         if (position[a][b] === null){
             _setPosition(a, b, player);
         }
         return position[a][b];
     };
+
     const _setPosition = (a, b, player) => {
         position[a][b] = player.getMarker();
     };
@@ -47,3 +52,5 @@ game.checkPosition(0, 1, playerX);
 game.checkPosition(0, 1, playerO);
 game.checkPosition(1, 1, playerO);
 console.log(game.showBoard());
+const gameC = gameController(playerX, playerO);
+console.log(gameC.logPlayers());
