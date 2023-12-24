@@ -48,7 +48,7 @@ const gameBoard = (function (){
     const checkCondition = () => {
         return false;
     };
-    return { newBoard, showBoard, checkPosition, checkCondition};
+    return { newBoard, showBoard, checkPosition, checkCondition, };
 })();
 gameBoard.newBoard();
 const playerX = createPlayer('x');
