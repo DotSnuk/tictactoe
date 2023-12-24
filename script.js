@@ -1,6 +1,6 @@
 import { createPlayer } from "/player.js";
 import { gameController } from "./gameController.js";
-const game = (function createGameboard (){
+const gameBoard = (function (){
     let position = [];
 
     const newBoard = () => {
@@ -35,22 +35,25 @@ const game = (function createGameboard (){
     const checkPosition = (a, b, player) => {
         if (position[a][b] === null){
             _setPosition(a, b, player);
-        }
-        return position[a][b];
+            return true;
+        } else {
+            return false;
+        };
     };
 
     const _setPosition = (a, b, player) => {
         position[a][b] = player.getMarker();
     };
-    return { newBoard, showBoard, checkPosition, };
+
+    const checkCondition = () => {
+        return false;
+    };
+    return { newBoard, showBoard, checkPosition, checkCondition};
 })();
-game.newBoard();
-console.log(game.showBoard());
+gameBoard.newBoard();
 const playerX = createPlayer('x');
 const playerO = createPlayer('o');
-game.checkPosition(0, 1, playerX);
-game.checkPosition(0, 1, playerO);
-game.checkPosition(1, 1, playerO);
-console.log(game.showBoard());
-const gameC = gameController(playerX, playerO);
-console.log(gameC.logPlayers());
+const gameControl = gameController(playerX, playerO);
+gameControl.playMatch(gameBoard);
+
+
