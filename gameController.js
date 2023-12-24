@@ -6,7 +6,6 @@ export function gameController(a, b){
     };
     const playMatch = (board) => {
         currentPlayer = players[0];
-        // need values for the first loop
         while (!board.checkCondition()){
             let values = _getValues();
             while (!board.checkPosition(values[0], values[1], currentPlayer)){
@@ -24,7 +23,6 @@ export function gameController(a, b){
         };
     };
     const _getValues = () => {
-        // add current player
         console.log(currentPlayer.getMarker() + '\n');
         const row = prompt('What row?: ');
         const col = prompt('What coloumn?:');
