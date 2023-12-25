@@ -4,6 +4,7 @@ export function gameController(a, b){
     const logPlayers = () => {
         return players;
     };
+
     const playMatch = (board) => {
         currentPlayer = players[0];
         while (!board.checkCondition()){
@@ -15,6 +16,7 @@ export function gameController(a, b){
             console.log(board.showBoard());
         };
     };
+
     const _changePlayer = () => {
         if (currentPlayer === players[0]){
             currentPlayer = players[1];
@@ -22,11 +24,13 @@ export function gameController(a, b){
             currentPlayer = players[0];
         };
     };
+
     const _getValues = () => {
         console.log(currentPlayer.getMarker() + '\n');
         const row = prompt('What row?: ');
         const col = prompt('What coloumn?:');
         return [row, col];
     };
-    return { logPlayers, playMatch };
+
+    return { logPlayers, playMatch, };
 };

@@ -46,8 +46,27 @@ const gameBoard = (function (){
     };
 
     const checkCondition = () => {
-        return false;
+        if (_winCondition()){
+            console.log('winC returns true');
+            return true;
+        } else {
+            console.log('winC returns false');
+            return false;
+        };        
     };
+
+    const _winCondition = () => {
+        // horizontal check
+        position.forEach((row) => {
+            if (row[0] !== null){
+                if (row[0] === row[1] && row[0] === row[2]){
+                    console.log('victory?!?!?');
+                    return true;
+                };
+            };
+        });
+    };
+
     return { newBoard, showBoard, checkPosition, checkCondition, };
 })();
 gameBoard.newBoard();
