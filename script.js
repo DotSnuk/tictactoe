@@ -46,6 +46,7 @@ const gameBoard = (function (){
     };
 
     const checkCondition = () => {
+        
         if (_winCondition()){
             console.log('winC returns true');
             return true;
@@ -57,14 +58,25 @@ const gameBoard = (function (){
 
     const _winCondition = () => {
         // horizontal check
-        position.forEach((row) => {
+        for (const row of position){
             if (row[0] !== null){
                 if (row[0] === row[1] && row[0] === row[2]){
-                    console.log('victory?!?!?');
+                    console.log('victory!?');
                     return true;
-                };
-            };
-        });
+                }
+            }
+        }
+        
+            // if (x[0] !== null){
+            //     console.log(x[0]);
+            //     if (x[0] === x[1] && x[0] === x[2]){
+            //         console.log('victoryz!!??');
+            //         return true;
+            //     }
+            // }
+
+        
+        
     };
 
     return { newBoard, showBoard, checkPosition, checkCondition, };
