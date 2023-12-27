@@ -79,6 +79,35 @@ const gameBoard = (function (){
                 };
             };
         };
+        // diagonal check
+        for (let i = 0; i < 2; i++){
+            let compare = [];
+            let indx = 0;
+            if (i === 1){
+                indx = 2;
+            }
+            const adjIndx = (function (){
+                return function() {
+                    if (i === 0){
+                        indx++;
+                    } else {
+                        indx--;
+                    }
+                }
+            })();
+            for (const arr of position){
+                compare.push(arr[indx]);
+                adjIndx();
+                
+            };
+            if (compare[0] !== null){
+                if (compare[0] === compare[1] && compare[0] === compare[2]){
+                    console.log('diagonal victory :OOOO');
+                    return true;
+                };
+            }
+        }
+        
     }; 
 
     return { newBoard, showBoard, checkPosition, checkCondition, };
