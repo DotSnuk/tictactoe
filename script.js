@@ -46,7 +46,6 @@ const gameBoard = (function (){
     };
 
     const checkCondition = () => {
-        
         if (_winCondition()){
             console.log('winC returns true');
             return true;
@@ -63,21 +62,24 @@ const gameBoard = (function (){
                 if (row[0] === row[1] && row[0] === row[2]){
                     console.log('victory!?');
                     return true;
-                }
-            }
-        }
-        
-            // if (x[0] !== null){
-            //     console.log(x[0]);
-            //     if (x[0] === x[1] && x[0] === x[2]){
-            //         console.log('victoryz!!??');
-            //         return true;
-            //     }
-            // }
-
-        
-        
-    };
+                };
+            };
+        };
+        // vertical check
+        // pushes the value of the same index to a array for comparison
+        for (let x = 0; x < position.length; x++){
+            let compare = [];
+            for (const arr of position){
+                compare.push(arr[x]);
+            };
+            if (compare[0] !== null){
+                if (compare[0] === compare[1] && compare[0] === compare[2]){
+                    console.log('vertical victory :D');
+                    return true;
+                };
+            };
+        };
+    }; 
 
     return { newBoard, showBoard, checkPosition, checkCondition, };
 })();
