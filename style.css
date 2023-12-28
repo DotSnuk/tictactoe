@@ -41,3 +41,11 @@ main {
     grid-template-rows: repeat(3, 1fr);
     /* game */
 }
+.square {
+    width: 200px;
+    height: 200px;
+    border: 1px solid black;
+}
+.square:hover {
+    background-color: var(--color03);
+}

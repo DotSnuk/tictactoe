@@ -1,5 +1,6 @@
 import { createPlayer } from "/player.js";
 import { gameController } from "./gameController.js";
+import { init } from "/displayController.js";
 const gameBoard = (function (){
     let position = [];
 
@@ -118,6 +119,7 @@ gameBoard.newBoard();
 const playerX = createPlayer('x');
 const playerO = createPlayer('o');
 const gameControl = gameController(playerX, playerO);
+init();
 // commented to not show prompt
 // gameControl.playMatch(gameBoard);
 
