@@ -60,7 +60,7 @@ const gameBoard = (function (){
         for (const row of position){
             if (row[0] !== null){
                 if (row[0] === row[1] && row[0] === row[2]){
-                    console.log('victory!?');
+                    console.log('horizontal victory!?');
                     return true;
                 };
             };
@@ -80,12 +80,14 @@ const gameBoard = (function (){
             };
         };
         // diagonal check
+        // loops twice, and uses a iife to increase or decrease the index.
+        // the second loop it sets the starting index to 2
         for (let i = 0; i < 2; i++){
             let compare = [];
             let indx = 0;
             if (i === 1){
                 indx = 2;
-            }
+            };
             const adjIndx = (function (){
                 return function() {
                     if (i === 0){
@@ -105,8 +107,8 @@ const gameBoard = (function (){
                     console.log('diagonal victory :OOOO');
                     return true;
                 };
-            }
-        }
+            };
+        };
         
     }; 
 

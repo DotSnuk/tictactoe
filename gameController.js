@@ -28,7 +28,7 @@ export function gameController(a, b){
     const _getValues = () => {
         console.log(currentPlayer.getMarker() + '\n');
         const row = prompt('What row?: ');
-        const col = prompt('What coloumn?:');
+        const col = prompt('What coloumn?: ');
         return [row, col];
     };
 
