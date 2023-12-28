@@ -6,15 +6,16 @@ export function gameController(a, b){
     };
 
     const playMatch = (board) => {
-        currentPlayer = players[0];
         while (!board.checkCondition()){
+            _changePlayer();
             let values = _getValues();
             while (!board.checkPosition(values[0], values[1], currentPlayer)){
                 values = _getValues();
             };
-            _changePlayer();
             console.log(board.showBoard());
         };
+        currentPlayer.increaseScore();
+        console.log(currentPlayer.getScore());
     };
 
     const _changePlayer = () => {
