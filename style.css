@@ -34,5 +34,10 @@ main {
     grid-template-rows: 1fr 4fr;
 }
 #game {
-    
+    border: 1px solid black;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    /* game */
 }
