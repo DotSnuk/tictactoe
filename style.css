@@ -16,6 +16,23 @@ body {
     font-family: "Poppins", sans-serif;
 }
 main {
+    display: grid;
     margin: 0 auto;
     text-align: center;
+}
+.scoreboard {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    width: 400px;
+    height: 100px;
+    margin: 0 auto;
+}
+
+.scoreboard > .playerX, .scoreboard > .playerO {
+    display: grid;
+    grid-template-columns: 100%;
+    grid-template-rows: 1fr 4fr;
+}
+#game {
+    
 }

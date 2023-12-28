@@ -118,6 +118,8 @@ gameBoard.newBoard();
 const playerX = createPlayer('x');
 const playerO = createPlayer('o');
 const gameControl = gameController(playerX, playerO);
-gameControl.playMatch(gameBoard);
+// commented to not show prompt
+// gameControl.playMatch(gameBoard);
+
 
 
