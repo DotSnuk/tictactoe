@@ -1,3 +1,4 @@
+import { sqClick, } from "/displayController.js";
 export function gameController(a, b){
     const players = [a, b];
     let currentPlayer;
@@ -8,7 +9,7 @@ export function gameController(a, b){
     const playMatch = (board) => {
         while (!board.checkCondition()){
             _changePlayer();
-            let values = _getValues();
+            let values = sqClick();
             while (!board.checkPosition(values[0], values[1], currentPlayer)){
                 values = _getValues();
             };
@@ -17,6 +18,17 @@ export function gameController(a, b){
         currentPlayer.increaseScore();
         console.log(currentPlayer.getScore());
     };
+
+    // change to playRound
+    const playRound = (val) => {
+        if (board.checkPosition(val[0], val[1], currentPlayer)){
+            if (board.checkCondition()){
+                currentPlayer.increaseScore();
+            }
+            _changePlayer();
+        }
+    }
+    
 
     const _changePlayer = () => {
         if (currentPlayer === players[0]){
