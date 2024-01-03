@@ -118,8 +118,9 @@ const gameBoard = (function (){
 gameBoard.newBoard();
 const playerX = createPlayer('x');
 const playerO = createPlayer('o');
-const gameControl = gameController(playerX, playerO);
+const gameControl = gameController();
 const display = displayController();
+gameControl.setup(playerX, playerO);
 display.init();
 // commented to not show prompt
 // gameControl.playMatch(gameBoard);

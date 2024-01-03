@@ -1,22 +1,27 @@
-export function gameController(a, b){
-    const players = [a, b];
+export function gameController(){
+    let players = [];
     let currentPlayer;
     const logPlayers = () => {
         return players;
     };
 
-    const playMatch = (board) => {
-        while (!board.checkCondition()){
-            _changePlayer();
-            let values = sqClick();
-            while (!board.checkPosition(values[0], values[1], currentPlayer)){
-                values = _getValues();
-            };
-            console.log(board.showBoard());
-        };
-        currentPlayer.increaseScore();
-        console.log(currentPlayer.getScore());
+    const setup = (a, b) => {
+        players = [a, b];
     };
+
+    // const playMatch = (board) => {
+    //     while (!board.checkCondition()){
+    //         _changePlayer();
+    //         let values = sqClick();
+    //         while (!board.checkPosition(values[0], values[1], currentPlayer)){
+    //             values = _getValues();
+    //         };
+    //         console.log(board.showBoard());
+    //     };
+    //     currentPlayer.increaseScore();
+    //     console.log(currentPlayer.getScore());
+    // };
+
 
     // change to playRound
     const playRound = (val) => {
@@ -44,5 +49,5 @@ export function gameController(a, b){
         return [row, col];
     };
 
-    return { logPlayers, playMatch, playRound, };
+    return { logPlayers, playRound, setup, };
 };
