@@ -1,4 +1,3 @@
-import { sqClick, } from "/displayController.js";
 export function gameController(a, b){
     const players = [a, b];
     let currentPlayer;
@@ -45,5 +44,5 @@ export function gameController(a, b){
         return [row, col];
     };
 
-    return { logPlayers, playMatch, };
+    return { logPlayers, playMatch, playRound, };
 };

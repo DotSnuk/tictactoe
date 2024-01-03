@@ -1,4 +1,5 @@
 const gameId = document.querySelector('#game');
+import { gameController } from "/gameController.js";
 export function displayController(){
     const init = () => {
         for (let x = 0; x < 3; x++){
@@ -15,14 +16,16 @@ export function displayController(){
         };
     };
 
-        const sqClick = (target) => {
+    const sqClick = (target) => {
             const row = target.getAttribute('data-row');
             const col = target.getAttribute('data-col');
             console.log(`Row : ${row} Coloum: ${col}`);
+            gameController.playRound([row, col]);
+            // test
             return [row, col];
         };
 
-    return { init, sqClick, }
+    return { init, };
 }
 // notes to self
 // make name bold to show who's turn it is
