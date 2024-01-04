@@ -136,6 +136,9 @@ function createPlayer(mark){
 
 const display = (function display(){
     const gameId = document.querySelector('#game');
+    const listener = event => {
+        _sqClick(event.target);
+    }
     for (let x = 0; x < 3; x++){
         for (let y = 0; y < 3; y++){
             const square = document.createElement('div');
@@ -143,17 +146,18 @@ const display = (function display(){
             square.dataset.col = y;
             square.classList.add('square');
             gameId.appendChild(square);
-            square.addEventListener('click', (event) => {
-                _sqClick(event.target);
-            });
+            square.addEventListener('click', listener);
         };
     };
+
+    
 
     const _sqClick = (target) => {
             const row = target.getAttribute('data-row');
             const col = target.getAttribute('data-col');
             console.log(`Row : ${row} Coloum: ${col}`);
             target.innerText = gameLogic.getCurrentPlayer().getMarker();
+            target.removeEventListener('click', listener);
             gameLogic.playRound([row, col]);
         };
 
