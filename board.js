@@ -1,4 +1,4 @@
-const gameBoard = (function gameBoard(){
+export function gameBoard(){
     let position = [];
 
     const newBoard = () => {
@@ -63,7 +63,6 @@ const gameBoard = (function gameBoard(){
                 };
             };
         };
-
         // vertical check
         // pushes the value of the same index to a array for comparison
         for (let x = 0; x < position.length; x++){
@@ -78,7 +77,6 @@ const gameBoard = (function gameBoard(){
                 };
             };
         };
-
         // diagonal check
         // loops twice, and uses a iife to increase or decrease the index.
         // the second loop it sets the starting index to 2
@@ -113,136 +111,4 @@ const gameBoard = (function gameBoard(){
     }; 
 
     return { newBoard, showBoard, checkPosition, checkCondition, };
-})();
-
-function createPlayer(mark){
-    const marker = mark;
-    let score = 0;
-
-    const increaseScore = () => {
-        score++;
-    };
-
-    const getScore = () => {
-        return score;
-    };
-
-    const getMarker = () => {
-        return marker;
-    };
-
-    return { increaseScore, getScore, getMarker, };
 };
-
-const display = (function display(){
-    const gameId = document.querySelector('#game');
-    for (let x = 0; x < 3; x++){
-        for (let y = 0; y < 3; y++){
-            const square = document.createElement('div');
-            square.dataset.row = x;
-            square.dataset.col = y;
-            square.classList.add('square');
-            gameId.appendChild(square);
-            square.addEventListener('click', (event) => {
-                _sqClick(event.target);
-            });
-        };
-    };
-
-    const _sqClick = (target) => {
-            const row = target.getAttribute('data-row');
-            const col = target.getAttribute('data-col');
-            console.log(`Row : ${row} Coloum: ${col}`);
-            gameLogic.playRound([row, col]);
-        };
-
-})();
-
-const gameLogic = (function game(){
-    let players = [];
-    let currentPlayer;
-    const logPlayers = () => {
-        return players;
-    };
-
-    const setup = (playOne, playTwo) => {
-        players = [playOne, playTwo];
-        currentPlayer = playOne;
-    };
-
-    const playRound = (val) => {
-        if (gameBoard.checkPosition(val[0], val[1], currentPlayer)){
-            if (gameBoard.checkCondition()){
-                console.log('win');
-                currentPlayer.increaseScore();
-            }
-            _changePlayer();
-        }
-    };
-
-    const _changePlayer = () => {
-        if (currentPlayer === players[0]){
-            currentPlayer = players[1];
-        } else {
-            currentPlayer = players[0];
-        };
-    };
-
-    const _getValues = () => {
-        console.log(currentPlayer.getMarker() + '\n');
-        const row = prompt('What row?: ');
-        const col = prompt('What coloumn?: ');
-        return [row, col];
-    };
-
-    return { logPlayers, playRound, setup, };
-})();
-gameBoard.newBoard();
-const playX = createPlayer('x');
-const playO = createPlayer('o');
-gameLogic.setup(playX, playO);
-
-
-
-
-// const player = (function(mark){
-//     const marker = mark;
-//     let score = 0;
-
-//     const increaseScore = () => {
-//         score++;
-//     }
-
-//     const getScore = () => {
-//         return score;
-//     }
-
-//     const getMarker = () => {
-//         return marker;
-//     }
-
-//     return { increaseScore, getScore, getMarker, };
-// })();
-
-// const board = gameBoard();
-// board.newBoard();
-// console.log(board.showBoard())
-// const disp = display();
-// disp.init();
-// const gam = game();
-// const playX = player();
-// const playO = player('o');
-// gam.setup(playX, playO, board);
-
-// gameBoard.newBoard();
-// const playerX = createPlayer('x');
-// const playerO = createPlayer('o');
-// const gameControl = gameController();
-// const display = display();
-// gameControl.setup(playerX, playerO, gameBoard);
-// display.init();
-// commented to not show prompt
-// gameControl.playMatch(gameBoard);
-
-
-

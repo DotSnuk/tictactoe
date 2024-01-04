@@ -1,7 +1,7 @@
 const gameId = document.querySelector('#game');
-import { gameController } from "/gameController.js";
-const game = gameController();
-export function displayController(){
+import { game } from "/game.js";
+const gam = game();
+export function display(){
     const init = () => {
         for (let x = 0; x < 3; x++){
             for (let y = 0; y < 3; y++){
@@ -21,7 +21,7 @@ export function displayController(){
             const row = target.getAttribute('data-row');
             const col = target.getAttribute('data-col');
             console.log(`Row : ${row} Coloum: ${col}`);
-            game.playRound([row, col]);
+            gam.playRound([row, col]);
         };
 
     return { init, sqClick, };

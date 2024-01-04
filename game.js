@@ -1,6 +1,4 @@
-import { displayController } from "./displayController.js";
-const display = displayController();
-export function gameController(){
+export function game(){
     let board;
     let players = [];
     let currentPlayer;
