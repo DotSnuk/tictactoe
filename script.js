@@ -153,6 +153,7 @@ const display = (function display(){
             const row = target.getAttribute('data-row');
             const col = target.getAttribute('data-col');
             console.log(`Row : ${row} Coloum: ${col}`);
+            target.innerText = gameLogic.getCurrentPlayer().getMarker();
             gameLogic.playRound([row, col]);
         };
 
@@ -161,8 +162,8 @@ const display = (function display(){
 const gameLogic = (function game(){
     let players = [];
     let currentPlayer;
-    const logPlayers = () => {
-        return players;
+    const getCurrentPlayer = () => {
+        return currentPlayer;
     };
 
     const setup = (playOne, playTwo) => {
@@ -195,54 +196,12 @@ const gameLogic = (function game(){
         return [row, col];
     };
 
-    return { logPlayers, playRound, setup, };
+    return { getCurrentPlayer, playRound, setup, };
 })();
 gameBoard.newBoard();
 const playX = createPlayer('x');
 const playO = createPlayer('o');
 gameLogic.setup(playX, playO);
-
-
-
-
-// const player = (function(mark){
-//     const marker = mark;
-//     let score = 0;
-
-//     const increaseScore = () => {
-//         score++;
-//     }
-
-//     const getScore = () => {
-//         return score;
-//     }
-
-//     const getMarker = () => {
-//         return marker;
-//     }
-
-//     return { increaseScore, getScore, getMarker, };
-// })();
-
-// const board = gameBoard();
-// board.newBoard();
-// console.log(board.showBoard())
-// const disp = display();
-// disp.init();
-// const gam = game();
-// const playX = player();
-// const playO = player('o');
-// gam.setup(playX, playO, board);
-
-// gameBoard.newBoard();
-// const playerX = createPlayer('x');
-// const playerO = createPlayer('o');
-// const gameControl = gameController();
-// const display = display();
-// gameControl.setup(playerX, playerO, gameBoard);
-// display.init();
-// commented to not show prompt
-// gameControl.playMatch(gameBoard);
 
 
 
