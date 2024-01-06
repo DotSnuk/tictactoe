@@ -115,9 +115,27 @@ const gameBoard = (function gameBoard(){
     return { newBoard, showBoard, checkPosition, checkCondition, };
 })();
 
-function createPlayer(mark){
-    const marker = mark;
+function player(i, name = ''){
+    const id = i;
+    let playName;
+    let marker;
+    if (name = ''){
+        playName = `Player ${id}`
+    } else {
+        playName = name;
+    }
     let score = 0;
+    const _setMarker = () => {
+        switch(id){
+            case 1:
+                marker = 'x';
+                break;
+            case 2:
+                marker = 'o';
+                break;
+        };
+    }
+    _setMarker();
 
     const increaseScore = () => {
         score++;
@@ -127,18 +145,29 @@ function createPlayer(mark){
         return score;
     };
 
+    const getId = () => {
+        return id;
+    }
+
+    const getName = () => {
+        return playName;
+    }
+
     const getMarker = () => {
         return marker;
     };
 
-    return { increaseScore, getScore, getMarker, };
+    return { increaseScore, getScore, getMarker, getId, getName };
 };
 
 const display = (function display(){
     const gameId = document.querySelector('#game');
+    const playerList = document.querySelectorAll('[class^="play"]');
+   
     const listener = event => {
         _sqClick(event.target);
-    }
+    };
+
     for (let x = 0; x < 3; x++){
         for (let y = 0; y < 3; y++){
             const square = document.createElement('div');
@@ -150,30 +179,51 @@ const display = (function display(){
         };
     };
 
-    
+    const setName = () => {
+        for (let i = 1; i < 3; i++){
+            let select = document.querySelector((".play" + i) && '.name');
+            for (let play of players){
+                if (play.getId() == i){
+                    select.innerText = play.getName()
+                }
+            }
+            // select.innerText = name;
+            // for (let list of playerList){
+            //     if ((list.className.contains(i))){
+            //         console.log(list);
+            //     }
+            // }
+
+        }
+
+    }
+    setName();
 
     const _sqClick = (target) => {
             const row = target.getAttribute('data-row');
             const col = target.getAttribute('data-col');
             console.log(`Row : ${row} Coloum: ${col}`);
-            target.innerText = gameLogic.getCurrentPlayer().getMarker();
+            target.innerText = gameLogic.getCurrentPlayer().getMarker().toUpperCase();
             target.removeEventListener('click', listener);
             gameLogic.playRound([row, col]);
         };
-
 })();
 
 const gameLogic = (function game(){
-    let players = [];
     let currentPlayer;
     const getCurrentPlayer = () => {
         return currentPlayer;
     };
 
-    const setup = (playOne, playTwo) => {
-        players = [playOne, playTwo];
-        currentPlayer = playOne;
-    };
+    const createPlayers = () => {
+        players = [];
+        for (let i = 1; i < 3; i++){
+            const name = prompt('Enter a player name');
+            const playr = player(i, name);
+            players.push(playr);
+        }
+        currentPlayer = players[0];
+    }
 
     const playRound = (val) => {
         if (gameBoard.checkPosition(val[0], val[1], currentPlayer)){
@@ -200,12 +250,11 @@ const gameLogic = (function game(){
         return [row, col];
     };
 
-    return { getCurrentPlayer, playRound, setup, };
+    return { getCurrentPlayer, playRound, createPlayers, };
 })();
+let players = []
 gameBoard.newBoard();
-const playX = createPlayer('x');
-const playO = createPlayer('o');
-gameLogic.setup(playX, playO);
+gameLogic.createPlayers();
 
 
 

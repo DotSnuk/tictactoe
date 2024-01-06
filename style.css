@@ -24,11 +24,11 @@ main {
     display: grid;
     grid-template-columns: 1fr 1fr;
     width: 400px;
-    height: 100px;
+    height: 120px;
     margin: 0 auto;
 }
 
-.scoreboard > .playerX, .scoreboard > .playerO {
+.scoreboard > .play1, .scoreboard > .play2 {
     display: grid;
     grid-template-columns: 100%;
     grid-template-rows: 1fr 4fr;
@@ -42,9 +42,13 @@ main {
     /* game */
 }
 .square {
+    display: grid;
     width: 200px;
     height: 200px;
     border: 1px solid black;
+    align-items: center;
+    text-align: center;
+    font-size: 120px;
 }
 .square:hover {
     background-color: var(--color03);
