@@ -46,7 +46,7 @@ const gameBoard = (function gameBoard(){
 
     const checkCondition = () => {
         if (_winCondition()){
-            console.log('winC returns true');
+            display.updateScore();
             return true;
         } else {
             console.log('winC returns false');
@@ -202,8 +202,14 @@ const display = (function display(){
     }
     
     const updateScore = () => {
-
-    }
+        debugger
+        let index = 0;
+        for (const player of players){
+            const select = document.querySelector((".play" + index) && '.score');
+            select.innerText = player.getScore();
+            index++;
+        };
+    };
 
     const _sqClick = (target) => {
             const row = target.getAttribute('data-row');
@@ -213,6 +219,7 @@ const display = (function display(){
             target.removeEventListener('click', listener);
             gameLogic.playRound([row, col]);
         };
+        return { updateScore, }
 })();
 
 const gameLogic = (function game(){
@@ -260,6 +267,8 @@ const gameLogic = (function game(){
 
 gameBoard.newBoard();
 gameLogic.createPlayers();
-
+const string = ".play1"
+const select = document.querySelectorAll('.play1' && '.score')
+select.innerText = "asass";
 
 
