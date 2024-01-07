@@ -19,6 +19,7 @@ main {
     display: grid;
     margin: 0 auto;
     text-align: center;
+    justify-content: center;
 }
 .scoreboard {
     display: grid;
@@ -35,20 +36,31 @@ main {
 }
 #game {
     border: 1px solid black;
+    box-sizing: border-box;
     margin: 0 auto;
     display: grid;
+    width: 700px;
+    height: 700px;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(3, 1fr);
     /* game */
 }
 .square {
     display: grid;
-    width: 200px;
-    height: 200px;
+    /* width: 200px;
+    height: 200px; */
     border: 1px solid black;
     align-items: center;
     text-align: center;
     font-size: 120px;
+}
+.menu {
+    width: 700px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: 10px;
 }
 .square:hover {
     background-color: var(--color03);

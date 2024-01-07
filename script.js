@@ -1,3 +1,4 @@
+let players = []
 const gameBoard = (function gameBoard(){
     let position = [];
 
@@ -127,10 +128,10 @@ function player(i, name = ''){
     let score = 0;
     const _setMarker = () => {
         switch(id){
-            case 1:
+            case 0:
                 marker = 'x';
                 break;
-            case 2:
+            case 1:
                 marker = 'o';
                 break;
         };
@@ -180,9 +181,11 @@ const display = (function display(){
     };
 
     const setName = () => {
-        for (let i = 1; i < 3; i++){
+        for (let i = 0; i < 2; i++){
             let select = document.querySelector((".play" + i) && '.name');
             for (let play of players){
+                console.log(play)
+                console.log(players)
                 if (play.getId() == i){
                     select.innerText = play.getName()
                 }
@@ -197,7 +200,10 @@ const display = (function display(){
         }
 
     }
-    setName();
+    
+    const updateScore = () => {
+
+    }
 
     const _sqClick = (target) => {
             const row = target.getAttribute('data-row');
@@ -217,9 +223,8 @@ const gameLogic = (function game(){
 
     const createPlayers = () => {
         players = [];
-        for (let i = 1; i < 3; i++){
-            const name = prompt('Enter a player name');
-            const playr = player(i, name);
+        for (let i = 0; i < 2; i++){
+            const playr = player(i);
             players.push(playr);
         }
         currentPlayer = players[0];
@@ -252,7 +257,7 @@ const gameLogic = (function game(){
 
     return { getCurrentPlayer, playRound, createPlayers, };
 })();
-let players = []
+
 gameBoard.newBoard();
 gameLogic.createPlayers();
 
