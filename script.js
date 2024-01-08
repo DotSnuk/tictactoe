@@ -3,6 +3,7 @@ const gameBoard = (function gameBoard(){
     let position = [];
 
     const newBoard = () => {
+        position = [];
         for (let x = 0; x < 3; x++){
             let row = [];
             for (let y = 0; y < 3; y++){
@@ -162,22 +163,49 @@ function player(i, name = ''){
 
 const display = (function display(){
     const gameId = document.querySelector('#game');
-    const playerList = document.querySelectorAll('[class^="play"]');
-   
+    const resetButton = document.getElementById('reset');
+    
     const listener = event => {
         _sqClick(event.target);
     };
 
-    for (let x = 0; x < 3; x++){
-        for (let y = 0; y < 3; y++){
-            const square = document.createElement('div');
-            square.dataset.row = x;
-            square.dataset.col = y;
-            square.classList.add('square');
-            gameId.appendChild(square);
-            square.addEventListener('click', listener);
+    const render = () => {
+        for (let x = 0; x < 3; x++){
+            for (let y = 0; y < 3; y++){
+                const square = document.createElement('div');
+                square.dataset.row = x;
+                square.dataset.col = y;
+                square.classList.add('square');
+                gameId.appendChild(square);
+                square.addEventListener('click', listener);
+            };
         };
     };
+    render();
+    const _removeSquares = () => {
+        const squareDiv = document.querySelectorAll('.square');
+        squareDiv.forEach(square => {
+            gameId.removeChild(square);
+        });
+    };
+    const reset = () => {
+        console.log('resetting')
+        gameBoard.newBoard();
+        _removeSquares();
+        render();
+    }
+    resetButton.addEventListener('click', reset);
+
+    // for (let x = 0; x < 3; x++){
+    //     for (let y = 0; y < 3; y++){
+    //         const square = document.createElement('div');
+    //         square.dataset.row = x;
+    //         square.dataset.col = y;
+    //         square.classList.add('square');
+    //         gameId.appendChild(square);
+    //         square.addEventListener('click', listener);
+    //     };
+    // };
 
     const setName = () => {
         for (let i = 0; i < 2; i++){
@@ -217,7 +245,7 @@ const display = (function display(){
             target.removeEventListener('click', listener);
             gameLogic.playRound([row, col]);
         };
-        return { updateScore, }
+        return { updateScore, render, reset, }
 })();
 
 const gameLogic = (function game(){
