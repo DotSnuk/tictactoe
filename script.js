@@ -127,11 +127,6 @@ function player(i, name=''){
         playName = `Player ${id+1}`
     }
 
-    // if (name = ''){
-    //     playName = `Player ${id}`
-    // } else {
-    //     playName = name;
-    // }
     let score = 0;
     const _setMarker = () => {
         switch(id){
@@ -236,7 +231,7 @@ const display = (function display(){
             target.removeEventListener('click', listener);
             gameLogic.playRound([row, col]);
         };
-        return { updateScore, render, reset, setName }
+        return { updateScore, render, reset, setName, }
 })();
 
 const gameLogic = (function game(){
