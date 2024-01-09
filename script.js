@@ -195,8 +195,8 @@ const display = (function display(){
         let index = 0;
         for (const player of gameLogic.getPlayers()){
             const selectName = document.querySelector(".play" + index + ".name");
-            selectName.innerText = player.getName();
-            console.log(player.getName());
+            const markerHint = ' (' + player.getMarker().toUpperCase() + ')';
+            selectName.innerText = player.getName() + markerHint;
             index++;
         }
     }
