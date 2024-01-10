@@ -68,4 +68,5 @@ main {
 }
 .bold {
     font-weight: 700;
+    transform: scale(1.2);
 }
