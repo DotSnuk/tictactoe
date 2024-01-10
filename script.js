@@ -1,4 +1,3 @@
-
 const gameBoard = (function gameBoard(){
     let position = [];
 
@@ -211,6 +210,9 @@ const display = (function display(){
     const newGame = () => {
         gameLogic.changePlayers();
         setName();
+        updateScore();
+        reset();
+        boldCurrentPlayer();
     }
     newGameButton.addEventListener('click', newGame);
     
@@ -223,6 +225,21 @@ const display = (function display(){
         };
     };
 
+    const boldCurrentPlayer = () => {
+        const playerNames = document.querySelectorAll('.name');
+        const indexCurrPlayer = gameLogic.getCurrentPlayer().getId();
+        const indexLastPlayer = 1 - indexCurrPlayer;
+        playerNames[indexCurrPlayer].classList.add('bold');
+        playerNames[indexLastPlayer].classList.remove('bold');
+    }
+
+    const removeListeners = () => {
+        const squares = document.querySelectorAll('.square');
+        squares.forEach(square => {
+            square.removeEventListener('click', listener);
+        });
+    }
+
     const _sqClick = (target) => {
             const row = target.getAttribute('data-row');
             const col = target.getAttribute('data-col');
@@ -231,12 +248,14 @@ const display = (function display(){
             target.removeEventListener('click', listener);
             gameLogic.playRound([row, col]);
         };
-        return { updateScore, render, reset, setName, }
+        return { updateScore, render, reset, setName, removeListeners, boldCurrentPlayer, }
 })();
 
 const gameLogic = (function game(){
     let players = []
     let currentPlayer;
+    let moves = 0;
+    let victory = false;
     const getCurrentPlayer = () => {
         return currentPlayer;
     };
@@ -247,6 +266,7 @@ const gameLogic = (function game(){
             players.push(playr);
         }
         currentPlayer = players[0];
+        display.boldCurrentPlayer();
     }
 
     const changePlayers = () => {
@@ -254,20 +274,22 @@ const gameLogic = (function game(){
         for (let i = 0; i < 2; i++){
             const name = prompt(`Enter Player ${i} name`)
             const playr = player(i, name);
-            players.push(playr)
+            players.push(playr);
         }
         currentPlayer = players[0]
     }
 
     const playRound = (val) => {
-        if (gameBoard.checkPosition(val[0], val[1], currentPlayer)){
-            if (gameBoard.checkCondition()){
-                console.log('win');
-                currentPlayer.increaseScore();
-                display.updateScore();
-            }
-            _changeCurrentPlayer();
-        }
+            if (gameBoard.checkPosition(val[0], val[1], currentPlayer)){
+                if (gameBoard.checkCondition()){
+                    currentPlayer.increaseScore();
+                    display.updateScore();
+                    display.removeListeners();
+                }
+                moves++;
+                _changeCurrentPlayer();
+                // make a call to display to bold that playername
+            };
     };
 
     const _changeCurrentPlayer = () => {
@@ -276,6 +298,7 @@ const gameLogic = (function game(){
         } else {
             currentPlayer = players[0];
         };
+        display.boldCurrentPlayer();
     };
 
     const getPlayers = () => {
@@ -294,3 +317,6 @@ const gameLogic = (function game(){
 
 gameBoard.newBoard();
 gameLogic.createInitPlayers();
+// const playerNames = document.querySelectorAll('.name');
+// playerNames[0].innerText = 'hello';
+// playerNames[0].classList.add('bold')

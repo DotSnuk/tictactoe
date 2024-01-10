@@ -14,6 +14,7 @@
 }
 body {
     font-family: "Poppins", sans-serif;
+    font-weight: 400;
 }
 main {
     display: grid;
@@ -64,4 +65,7 @@ main {
 }
 .square:hover {
     background-color: var(--color03);
+}
+.bold {
+    font-weight: 700;
 }
