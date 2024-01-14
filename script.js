@@ -63,92 +63,40 @@ const gameBoard = (function gameBoard() {
         }
       }
     }
-    // position.forEach((row, rowIndx) => {
-    //   if (row.includes(null)) return
-    //   if (!compare(row)) return
-    //   console.log('win horz')
-    //   return true
-    // })
-    for (const [rowIndex, row] of position.entries()) {
-      if (row.includes(null)) continue
-      if (!compare(row)) return
-      row.forEach((value, valueIndex) => {
-        line.push([rowIndex, valueIndex])
-      })
-      console.log(line)
-      display.winningLine(line)
-      return true
-    }
-
-    // const roww = position.filter((rowe) => {
-    //   if (rowe.includes(null)) return
-    //   // if (compare(rowe)){
-    //   //   rowe.forEach((item, i) => {
-    //   //     line.push({rowIndex: rowIndx, colIndex: i})
-    //   //     return true
-    //   //   })
-    //   // }
-    // })
-    // roww.forEach((col, rowIndx) => {
-    //   if (compare(col)) {
-    //     line.push
-    //   }
-    // })
-    // console.log(line)
-
-
-    // const rows = position.map((row, indx) => {
-    //   const col = row.filter((item) => {
-    //     if (item !== null) {
-    //       return item;
-    //     }
-    //   });
-    //   return col;
-    // });
-    // console.log(rows);
-    // if (rows.some(compare)) {
-    //   return true;
-    // }
-
+    const lineReset = (function () {
+      const reset = () => {
+        line = [];
+      };
+      return { reset };
+    })();
     // horizontal check
-
-    // position.some((row) => {
-    //   const col = row.filter((item) => {
-    //     if (item !== null){
-    //         return item;
-    //     }
-    //   });
-    //   if (compare(col)) return true;
-    // });
-
-    // for (const col of position){
-    //     if (col[0] !== null){
-    //         if (col[0] === col[1] && col[0] === col[2]){
-    //             let line = col.map((val) => {
-    //                 return val
-    //             })
-    //             // can this be achieved if I use map method from the start?
-    //             console.log(line);
-    //             console.log('horizontal victory!?');
-    //             return true;
-    //         };
-    //     };
-    //     row++;
-    // };
-
+    for (const [rowIndex, row] of position.entries()) {
+      if (row.includes(null)) continue;
+      if (!compare(row)) continue;
+      row.forEach((value, valueIndex) => {
+        line.push([rowIndex, valueIndex]);
+      });
+      display.winningLine(line);
+      return true;
+    }
     // vertical check
     // pushes the value of the same index to a array for comparison
-    for (let x = 0; x < position.length; x++) {
-      let compare = [];
-      for (const arr of position) {
-        compare.push(arr[x]);
+    for (let rowIndex = 0; rowIndex < position.length; rowIndex++) {
+      let compareVertical = [];
+      position.forEach((row, indx) => {
+        compareVertical.push(row[rowIndex]);
+        line.push([indx, rowIndex]);
+      });
+      if (compareVertical.includes(null)) {
+        lineReset.reset();
+        continue;
       }
-      if (compare[0] !== null) {
-        if (compare[0] === compare[1] && compare[0] === compare[2]) {
-          console.log("vertical victory :D");
-          return true;
-        }
+      if (!compare(compareVertical)) {
+        lineReset.reset();
+        continue;
       }
+      display.winningLine(line);
+      return true;
     }
 
     // diagonal check
@@ -295,15 +243,13 @@ const display = (function display() {
   };
 
   const winningLine = (values) => {
-    // const squares = document.querySelectorAll('.square');
-    const test = document.querySelector('[data-row="' + 1 + '"]' + '[data-col="' + 1 + '"]')
-    values.forEach(val => {
-      const elem = document.querySelector('[data-row="' + val[0] + '"]' + '[data-col="' + val[1] + '"]')
-      elem.classList.add('win')
-  
-    })
-    
-  }
+    values.forEach((val) => {
+      const elem = document.querySelector(
+        '[data-row="' + val[0] + '"]' + '[data-col="' + val[1] + '"]'
+      );
+      elem.classList.add("win");
+    });
+  };
 
   const boldCurrentPlayer = () => {
     const playerNames = document.querySelectorAll(".name");
