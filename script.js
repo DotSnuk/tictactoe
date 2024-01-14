@@ -63,18 +63,52 @@ const gameBoard = (function gameBoard() {
         }
       }
     }
-    const rows = position.map((row) => {
-      const col = row.filter((item) => {
-        if (item !== null) {
-          return item;
-        }
-      });
-      return col;
-    });
-    console.log(rows);
-    if (rows.some(compare)) {
-      return true;
+    // position.forEach((row, rowIndx) => {
+    //   if (row.includes(null)) return
+    //   if (!compare(row)) return
+    //   console.log('win horz')
+    //   return true
+    // })
+    for (const [rowIndex, row] of position.entries()) {
+      if (row.includes(null)) continue
+      if (!compare(row)) return
+      row.forEach((value, valueIndex) => {
+        line.push([rowIndex, valueIndex])
+      })
+      console.log(line)
+      display.winningLine(line)
+      return true
     }
+
+    // const roww = position.filter((rowe) => {
+    //   if (rowe.includes(null)) return
+    //   // if (compare(rowe)){
+    //   //   rowe.forEach((item, i) => {
+    //   //     line.push({rowIndex: rowIndx, colIndex: i})
+    //   //     return true
+    //   //   })
+    //   // }
+    // })
+    // roww.forEach((col, rowIndx) => {
+    //   if (compare(col)) {
+    //     line.push
+    //   }
+    // })
+    // console.log(line)
+
+
+    // const rows = position.map((row, indx) => {
+    //   const col = row.filter((item) => {
+    //     if (item !== null) {
+    //       return item;
+    //     }
+    //   });
+    //   return col;
+    // });
+    // console.log(rows);
+    // if (rows.some(compare)) {
+    //   return true;
+    // }
 
     // horizontal check
 
@@ -260,15 +294,21 @@ const display = (function display() {
     }
   };
 
-  // const winningLine = (values) = {
-
-  // }
+  const winningLine = (values) => {
+    // const squares = document.querySelectorAll('.square');
+    const test = document.querySelector('[data-row="' + 1 + '"]' + '[data-col="' + 1 + '"]')
+    values.forEach(val => {
+      const elem = document.querySelector('[data-row="' + val[0] + '"]' + '[data-col="' + val[1] + '"]')
+      elem.classList.add('win')
+  
+    })
+    
+  }
 
   const boldCurrentPlayer = () => {
     const playerNames = document.querySelectorAll(".name");
     const indexCurrPlayer = gameLogic.getCurrentPlayer().getId();
     const indexLastPlayer = 1 - indexCurrPlayer;
-    playerNames[indexCurrPlayer].classList.add("win");
     playerNames[indexCurrPlayer].classList.add("bold");
     playerNames[indexLastPlayer].classList.remove("bold");
   };
@@ -283,7 +323,7 @@ const display = (function display() {
   const _sqClick = (target) => {
     const row = target.getAttribute("data-row");
     const col = target.getAttribute("data-col");
-    // console.log(`Row : ${row} Coloum: ${col}`);
+    console.log(`Row : ${row} Coloum: ${col}`);
     target.innerText = gameLogic.getCurrentPlayer().getMarker().toUpperCase();
     target.removeEventListener("click", listener);
     gameLogic.playRound([row, col]);
@@ -295,6 +335,7 @@ const display = (function display() {
     setName,
     removeListeners,
     boldCurrentPlayer,
+    winningLine,
   };
 })();
 
