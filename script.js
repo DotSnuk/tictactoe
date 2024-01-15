@@ -49,7 +49,6 @@ const gameBoard = (function gameBoard() {
     if (_winCondition()) {
       return true;
     } else {
-      //   console.log("winC returns false");
       return false;
     }
   };
@@ -283,7 +282,6 @@ const gameLogic = (function game() {
   let players = [];
   let currentPlayer;
   let moves = 0;
-  let victory = false;
   const getCurrentPlayer = () => {
     return currentPlayer;
   };
@@ -316,7 +314,6 @@ const gameLogic = (function game() {
       }
       moves++;
       _changeCurrentPlayer();
-      // make a call to display to bold that playername
     }
   };
 
@@ -334,6 +331,7 @@ const gameLogic = (function game() {
   };
 
   const _getValues = () => {
+    // was used in console version
     console.log(currentPlayer.getMarker() + '\n');
     const row = prompt('What row?: ');
     const col = prompt('What coloumn?: ');
@@ -351,6 +349,3 @@ const gameLogic = (function game() {
 
 gameBoard.newBoard();
 gameLogic.createInitPlayers();
-// const playerNames = document.querySelectorAll('.name');
-// playerNames[0].innerText = 'hello';
-// playerNames[0].classList.add('bold')
