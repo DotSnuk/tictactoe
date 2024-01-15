@@ -14,18 +14,18 @@ const gameBoard = (function gameBoard() {
 
   const showBoard = () => {
     // only for console purpose
-    let string = "";
-    position.forEach((row) => {
+    let string = '';
+    position.forEach(row => {
       row.forEach((pos, idx) => {
         if (pos === null) {
-          string += "#";
+          string += '#';
         } else {
           string += pos;
         }
         if (row.length - 1 !== idx) {
-          string += " ";
+          string += ' ';
         } else {
-          string += "\n";
+          string += '\n';
         }
       });
     });
@@ -57,12 +57,16 @@ const gameBoard = (function gameBoard() {
   const _winCondition = () => {
     let line = [];
     function compare(arr) {
-      if (arr.length === 3) {
-        if (arr[0] === arr[1] && arr[0] === arr[2]) {
-          return true;
-        }
+      if (arr.includes(null)) {
+        lineReset.reset();
+        return;
       }
+      if (arr[0] === arr[1] && arr[0] === arr[2]) {
+        return true;
+      }
+      lineReset.reset();
     }
+
     const lineReset = (function () {
       const reset = () => {
         line = [];
@@ -71,11 +75,10 @@ const gameBoard = (function gameBoard() {
     })();
     // horizontal check
     for (const [rowIndex, row] of position.entries()) {
-      if (row.includes(null)) continue;
       if (!compare(row)) continue;
-      row.forEach((value, valueIndex) => {
-        line.push([rowIndex, valueIndex]);
-      });
+      for (let i in row) {
+        line.push([rowIndex, i]);
+      }
       display.winningLine(line);
       return true;
     }
@@ -87,23 +90,17 @@ const gameBoard = (function gameBoard() {
         compareVertical.push(row[rowIndex]);
         line.push([indx, rowIndex]);
       });
-      if (compareVertical.includes(null)) {
-        lineReset.reset();
-        continue;
-      }
       if (!compare(compareVertical)) {
-        lineReset.reset();
         continue;
       }
       display.winningLine(line);
       return true;
     }
-
     // diagonal check
     // loops twice, and uses a iife to increase or decrease the index.
     // the second loop it sets the starting index to 2
     for (let i = 0; i < 2; i++) {
-      let compare = [];
+      let compareDiag = [];
       let indx = 0;
       if (i === 1) {
         indx = 2;
@@ -117,27 +114,25 @@ const gameBoard = (function gameBoard() {
           }
         };
       })();
-      for (const arr of position) {
-        compare.push(arr[indx]);
+      for (const [rowIndx, row] of position.entries()) {
+        compareDiag.push(row[indx]);
+        line.push([rowIndx, indx]);
         adjIndx();
       }
-      if (compare[0] !== null) {
-        if (compare[0] === compare[1] && compare[0] === compare[2]) {
-          console.log("diagonal victory :OOOO");
-          return true;
-        }
-      }
+      if (!compare(compareDiag)) continue;
+      display.winningLine(line);
+      return true;
     }
   };
 
   return { newBoard, showBoard, checkPosition, checkCondition };
 })();
 
-function player(i, name = "") {
+function player(i, name = '') {
   const id = i;
   let playName;
   let marker;
-  if (name != "") {
+  if (name != '') {
     playName = name;
   } else {
     playName = `Player ${id + 1}`;
@@ -147,10 +142,10 @@ function player(i, name = "") {
   const _setMarker = () => {
     switch (id) {
       case 0:
-        marker = "x";
+        marker = 'x';
         break;
       case 1:
-        marker = "o";
+        marker = 'o';
         break;
     }
   };
@@ -180,49 +175,48 @@ function player(i, name = "") {
 }
 
 const display = (function display() {
-  const gameId = document.querySelector("#game");
-  const resetButton = document.getElementById("reset");
-  const newGameButton = document.getElementById("newGame");
+  const gameId = document.querySelector('#game');
+  const resetButton = document.getElementById('reset');
+  const newGameButton = document.getElementById('newGame');
 
-  const listener = (event) => {
+  const listener = event => {
     _sqClick(event.target);
   };
 
   const render = () => {
     for (let x = 0; x < 3; x++) {
       for (let y = 0; y < 3; y++) {
-        const square = document.createElement("div");
+        const square = document.createElement('div');
         square.dataset.row = x;
         square.dataset.col = y;
-        square.classList.add("square");
+        square.classList.add('square');
         gameId.appendChild(square);
-        square.addEventListener("click", listener);
+        square.addEventListener('click', listener);
       }
     }
   };
   render();
   const _removeSquares = () => {
-    const squareDiv = document.querySelectorAll(".square");
-    squareDiv.forEach((square) => {
+    const squareDiv = document.querySelectorAll('.square');
+    squareDiv.forEach(square => {
       gameId.removeChild(square);
     });
   };
   const setName = () => {
     let index = 0;
     for (const player of gameLogic.getPlayers()) {
-      const selectName = document.querySelector(".play" + index + ".name");
-      const markerHint = " (" + player.getMarker().toUpperCase() + ")";
+      const selectName = document.querySelector('.play' + index + '.name');
+      const markerHint = ' (' + player.getMarker().toUpperCase() + ')';
       selectName.innerText = player.getName() + markerHint;
       index++;
     }
   };
   const reset = () => {
-    console.log("resetting");
     gameBoard.newBoard();
     _removeSquares();
     render();
   };
-  resetButton.addEventListener("click", reset);
+  resetButton.addEventListener('click', reset);
 
   const newGame = () => {
     gameLogic.changePlayers();
@@ -231,47 +225,47 @@ const display = (function display() {
     reset();
     boldCurrentPlayer();
   };
-  newGameButton.addEventListener("click", newGame);
+  newGameButton.addEventListener('click', newGame);
 
   const updateScore = () => {
     let index = 0;
     for (const player of gameLogic.getPlayers()) {
-      const selectScore = document.querySelector(".play" + index + ".score");
+      const selectScore = document.querySelector('.play' + index + '.score');
       selectScore.innerText = player.getScore();
       index++;
     }
   };
 
-  const winningLine = (values) => {
-    values.forEach((val) => {
+  const winningLine = values => {
+    values.forEach(val => {
       const elem = document.querySelector(
-        '[data-row="' + val[0] + '"]' + '[data-col="' + val[1] + '"]'
+        '[data-row="' + val[0] + '"]' + '[data-col="' + val[1] + '"]',
       );
-      elem.classList.add("win");
+      elem.classList.add('win');
     });
   };
 
   const boldCurrentPlayer = () => {
-    const playerNames = document.querySelectorAll(".name");
+    const playerNames = document.querySelectorAll('.name');
     const indexCurrPlayer = gameLogic.getCurrentPlayer().getId();
     const indexLastPlayer = 1 - indexCurrPlayer;
-    playerNames[indexCurrPlayer].classList.add("bold");
-    playerNames[indexLastPlayer].classList.remove("bold");
+    playerNames[indexCurrPlayer].classList.add('bold');
+    playerNames[indexLastPlayer].classList.remove('bold');
   };
 
   const removeListeners = () => {
-    const squares = document.querySelectorAll(".square");
-    squares.forEach((square) => {
-      square.removeEventListener("click", listener);
+    const squares = document.querySelectorAll('.square');
+    squares.forEach(square => {
+      square.removeEventListener('click', listener);
     });
   };
 
-  const _sqClick = (target) => {
-    const row = target.getAttribute("data-row");
-    const col = target.getAttribute("data-col");
+  const _sqClick = target => {
+    const row = target.getAttribute('data-row');
+    const col = target.getAttribute('data-col');
     console.log(`Row : ${row} Coloum: ${col}`);
     target.innerText = gameLogic.getCurrentPlayer().getMarker().toUpperCase();
-    target.removeEventListener("click", listener);
+    target.removeEventListener('click', listener);
     gameLogic.playRound([row, col]);
   };
   return {
@@ -313,7 +307,7 @@ const gameLogic = (function game() {
     currentPlayer = players[0];
   };
 
-  const playRound = (val) => {
+  const playRound = val => {
     if (gameBoard.checkPosition(val[0], val[1], currentPlayer)) {
       if (gameBoard.checkCondition()) {
         currentPlayer.increaseScore();
@@ -340,9 +334,9 @@ const gameLogic = (function game() {
   };
 
   const _getValues = () => {
-    console.log(currentPlayer.getMarker() + "\n");
-    const row = prompt("What row?: ");
-    const col = prompt("What coloumn?: ");
+    console.log(currentPlayer.getMarker() + '\n');
+    const row = prompt('What row?: ');
+    const col = prompt('What coloumn?: ');
     return [row, col];
   };
 
